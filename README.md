@@ -14,4 +14,4 @@ is a generic term that refers to a block of memory that serves as a temporary pl
 
 A buffer is temporary storage of data that is on its way to other media or storage of data that can be modified non-sequentially before it is read sequentially. It attempts to reduce the difference between input speed and output speed. A cache also acts as a buffer, but it stores data that is expected to be read several times to reduce the need to access slower storage. 
 
-
+file* in c
