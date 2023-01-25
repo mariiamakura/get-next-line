@@ -22,7 +22,7 @@ On error, -1 is returned, and errno is set to indicate the error.  In this case,
 ## static variable
 In computer programming, a static variable is a variable that has been allocated "statically", meaning that its lifetime (or "extent") is the entire run of the program.
 
-# static vs conctant variables
+## static vs conctant variables
 Cnst means that you're not changing the value after it has been initialised. static inside a function means the variable will exist before and after the function has executed. static outside of a function means that the scope of the symbol marked static is limited to that . c file and cannot be seen outside of it.
 
 ## macros
