@@ -5,7 +5,8 @@ This project is about programming a function that returns a line read from a fil
 
 int open(const char *pathname, int flags);
 The open() system call opens the file specified by pathname.  If the specified file does not exist, it may optionally (if O_CREAT is specified in flags) be created by open().
-[list pf flags](https://man7.org/linux/man-pages/man2/open.2.html)
+
+[List pf flags](https://man7.org/linux/man-pages/man2/open.2.html)
 
 On success, open(), openat(), and creat() return the new file descriptor (a nonnegative integer).  On error, -1 is returned and errno is set to indicate the error.
 
