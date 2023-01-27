@@ -16,3 +16,6 @@
 27	46	1674667111018571335	my_next_line	fbb7d70b2df0d73d
 0	27	1674667164741408051	CMakeFiles/my_next_line.dir/get_next_line.c.o	84667151fa165bc7
 27	45	1674667164757407704	my_next_line	fbb7d70b2df0d73d
+0	32	1674834730537867426	CMakeFiles/my_next_line.dir/get_next_line.c.o	84667151fa165bc7
+1	34	1674834730537867426	CMakeFiles/my_next_line.dir/get_next_line_utils.c.o	cf3b91fa53044a3c
+34	59	1674834730565866810	my_next_line	fbb7d70b2df0d73d
