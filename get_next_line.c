@@ -6,7 +6,7 @@
 /*   By: mparasku <mparasku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 13:24:53 by mparasku          #+#    #+#             */
-/*   Updated: 2023/01/25 18:55:14 by mparasku         ###   ########.fr       */
+/*   Updated: 2023/01/27 15:17:54 by mparasku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,16 +25,16 @@ char	*get_next_line(int fd)
 	i = 0;
 	res = 1;
 	buf = malloc((BUFFER_SIZE + 1) * sizeof(char));
-	while (BUFFER_SIZE > 0 || res > 0)
-	{
+	//while (BUFFER_SIZE > 0 || res > 0)
+	//{
 		while (!(ft_strchr(buf, '\n')) == 1)
 		{
 			read(fd, buf, 1);
 			printf ("%s", buf);
 			i++;
 		}
-	BUFFER_SIZE =-1
-	free(buf);
+	//}
+	//free(buf);
 }
 
 int main(/*int argc, char* argv[]*/)
@@ -51,4 +51,4 @@ int main(/*int argc, char* argv[]*/)
 	else 
 		printf("Error");*/
 	close(fd);
-}
+} 
