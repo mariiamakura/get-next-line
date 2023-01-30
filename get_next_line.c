@@ -6,7 +6,7 @@
 /*   By: mparasku <mparasku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 13:24:53 by mparasku          #+#    #+#             */
-/*   Updated: 2023/01/27 19:19:25 by mparasku         ###   ########.fr       */
+/*   Updated: 2023/01/30 14:47:00 by mparasku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ int print_lines(char *str, int new_line) //
 }
 
 
-char *get_next_line(int fd)
-{
+/* char *get_next_line(int fd)
+ */{
 
 	char *buf;
 	int i;

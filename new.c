@@ -1,68 +1,58 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <string.h>
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   new.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mparasku <mparasku@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/01/30 14:46:37 by mparasku          #+#    #+#             */
+/*   Updated: 2023/01/30 16:42:29 by mparasku         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-static int current_line = 0; // static variable to keep track of current line
+#include "get_next_line.h"
 
-int main() {
-    int fd;
-    char *line;
-    ssize_t bytes_read;
-    int current_position = 0;
+char *get_next_line(int fd)
+{
+	char buf[1024];
+	char *line;
+	int	byte_was_read; //how many bytes read() could manage
+	char	*pointer_n; //pointer to '\n' and everything that is after it 
+	int	flag; //to break circle but complite it till the end
+	static char	*remainder; //for what's left after we meet '\n' if buf is larger than 1 string
 
-    // Open the file
-    fd = open("test.txt", O_RDONLY);
-    if (fd == -1) {
-        perror("Error opening file");
-        exit(EXIT_FAILURE);
-    }
+	flag = 1;
+	if (fd < 0 || BUFFER_SIZE <= 0)
+		return(0);
+	if (remainder)
+		line = ft_strdup(remainder);
+	else
+		line = ft_strnew(1);
+	while (flag && (byte_was_read = read(fd, buf, BUFFER_SIZE)))
+	{
+		if (byte_was_read <= 0)
+			return (0);
+		buf[byte_was_read] = '\0';
+		if (pointer_n = ft_strchr(buf, '\n'))
+		{
+			*pointer_n = '\0';
+			flag = 0;
+			remainder = ft_strdup(pointer_n + 1);
+		}
+		line = ft_strjoin(line, buf);
+	}
+	return(line);
+}
 
-    // Allocate memory for the line
-    line = (char *)malloc(1024);
-    if (line == NULL) {
-        perror("Error allocating memory");
-        exit(EXIT_FAILURE);
-    }
 
-    // Read the file until the current line is reached
-    while (current_line > 0) {
-        bytes_read = read(fd, line, 1024);
-        if (bytes_read == -1) {
-            perror("Error reading file");
-            exit(EXIT_FAILURE);
-        }
-
-        // Check for newline characters
-        for (int i = 0; i < bytes_read; i++) {
-            if (line[i] == '\n') {
-                current_line--;
-            }
-        }
-
-        current_position += bytes_read;
-    }
-
-    // Seek to the current position
-    lseek(fd, current_position, SEEK_SET);
-
-    // Read the current line
-    bytes_read = read(fd, line, 1024);
-    if (bytes_read == -1) {
-        perror("Error reading file");
-        exit(EXIT_FAILURE);
-    }
-
-    // Print the line
-    printf("%s", line);
-
-    // Free the memory
-    free(line);
-    // Close the file
-    close(fd);
-
-    // Increment the current line
-    current_line++;
-
-    return 0;
+int main()
+{
+	char *error;
+	int fd = open("test.txt", O_RDWR);
+	printf("%s\n", get_next_line(fd));
+	printf("%s\n", get_next_line(fd));
+	printf("%s\n", get_next_line(fd));
+/* 	close(fd); */
+	printf("%s\n", get_next_line(fd));
+	printf("%s\n", get_next_line(fd));
 }
