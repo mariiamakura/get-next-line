@@ -6,13 +6,13 @@
 /*   By: mparasku <mparasku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 13:25:00 by mparasku          #+#    #+#             */
-/*   Updated: 2023/01/30 16:30:32 by mparasku         ###   ########.fr       */
+/*   Updated: 2023/01/30 18:05:58 by mparasku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
-# define BUFFER_SIZE 10
+# define BUFFER_SIZE 1000
 
 # include <unistd.h>
 # include <stdio.h>
@@ -28,5 +28,6 @@ size_t	ft_strlcat(char *dst, const char *src, size_t size);
 char	*ft_strjoin(char const *s1, char const *s2);
 char	*ft_strnew(size_t size);
 char	*ft_strdup(const char *s);
+char	*ft_strcpy(char *dest, char *src);
 
 #endif

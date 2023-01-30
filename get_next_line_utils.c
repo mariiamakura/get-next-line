@@ -6,7 +6,7 @@
 /*   By: mparasku <mparasku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 13:24:57 by mparasku          #+#    #+#             */
-/*   Updated: 2023/01/30 15:49:34 by mparasku         ###   ########.fr       */
+/*   Updated: 2023/01/30 17:51:33 by mparasku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,4 +121,18 @@ char	*ft_strdup(const char *s)
 		return (0);
 	ft_strlcpy(p, s, (ft_strlen(s) + 1));
 	return (p);
+}
+
+char	*ft_strcpy(char *dest, char *src)
+{
+	int	i;
+
+	i = 0;
+	while (src[i] != '\0')
+	{
+		dest[i] = src[i];
+		i++;
+	}
+	dest[i] = '\0';
+	return (dest);
 }

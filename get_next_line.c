@@ -5,86 +5,85 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mparasku <mparasku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/24 13:24:53 by mparasku          #+#    #+#             */
-/*   Updated: 2023/01/30 14:47:00 by mparasku         ###   ########.fr       */
+/*   Created: 2023/01/30 14:46:37 by mparasku          #+#    #+#             */
+/*   Updated: 2023/01/30 18:43:38 by mparasku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int print_lines(char *str, int new_line) //
+void	ft_strclr(char *s)
 {
-	int	n_count;
-	int	i;
-	
-	n_count = 0;
-	i = 0;
+	if (s)
+		while (*s)
+			*s++ = '\0';
+}
 
-	while (str[i])
+char	*check_remainder(char *remainder, char **line)
+{
+	char *pointer_n;
+	
+	pointer_n = NULL;
+	if (remainder)
 	{
-		if (n_count == new_line)
+		if (pointer_n = ft_strchr(remainder, '\n'))
 		{
-			ft_putchar(str[i]);
-			if (str[i] == '\n')
-			{
-				return(1);
-				break;
-			}
-			i++;
+			pointer_n = '\0';
+			*line = ft_strdup(remainder);
+			pointer_n++;
+			ft_strcpy(remainder, pointer_n);
 		}
 		else
 		{
-			if (str[i] == '\n')
-			{
-				n_count++;
-			}
-			i++;
+			*line = ft_strdup(remainder);
+			ft_strclr(remainder);
 		}
 	}
-}
-
-
-/* char *get_next_line(int fd)
- */{
-
-	char *buf;
-	int i;
-	int res_read; //counting N-bytes that were read. If 0 - nothing left to read
-	static int new_line;
-
-	res_read = 1;
-	i = 0;
-
-	if (fd < 0 || BUFFER_SIZE <= 0)
-		return (NULL);
-	buf = malloc(256 * sizeof(char)); // buf is fixed to 256
-    if (!buf)
-        return (NULL);
-	while (res_read > 0)
+	else
 	{
-		res_read = read(fd, buf, BUFFER_SIZE); //ТУТ доработать, чтобы при повторном вызове функции печаталась часть: которая осталась в буфере
-		/* printf("res_read: %i\n", res_read);
-		printf("static: %i\n", new_line); */
-		new_line += print_lines(buf, new_line);
+		*line = ft_strnew(1);
 	}
+	return (pointer_n);
 }
 
-int main(/*int argc, char* argv[]*/)
+char *get_next_line(int fd)
+{
+	char buf[1024];
+	char *line;
+	int	byte_was_read; //how many bytes read() could manage
+	char	*pointer_n; //pointer to '\n' and everything that is after it 
+	static char	*remainder; //for what's left after we meet '\n' if buf is larger than 1 string
+	char	*tmp;
+	
+	remainder = NULL;
+	pointer_n = check_remainder(remainder, &line);
+	if (fd < 0 || BUFFER_SIZE <= 0)
+		return(0);
+	while (!pointer_n && (byte_was_read = read(fd, buf, BUFFER_SIZE)))
+	{
+		buf[byte_was_read] = '\0';
+		if (pointer_n = ft_strchr(buf, '\n'))
+		{
+			*pointer_n = '\0';
+			pointer_n++;
+			remainder = ft_strdup(pointer_n);
+		}
+		tmp = line;
+		line = ft_strjoin(line, buf);
+		free(tmp);
+	}
+	return(line);
+}
+
+
+int main()
 {
 	char *error;
-	/* for files */
-	/* int fd = open(argv[1], O_RDWR);*/
 	int fd = open("test.txt", O_RDWR);
-	/* printf ("%i\n", fd); */
-	error = get_next_line(fd);
-	printf("New call ------------------------------------------------------\n");
-	error = get_next_line(fd);
-	
-
-	/* for std inputs */
-	/*if (argc == 2)
-		get_next_line(0);
-	else
-		printf("Error");*/
-	/* close(fd); */
-}
+	printf("%s\n", get_next_line(fd));
+ 	printf("%s\n", get_next_line(fd));
+	/* printf("%s\n", get_next_line(fd));
+	close(fd);  
+	printf("%s\n", get_next_line(fd));
+	printf("%s\n", get_next_line(fd));  */
+} 
