@@ -5,79 +5,57 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: mparasku <mparasku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/24 13:24:57 by mparasku          #+#    #+#             */
-/*   Updated: 2023/01/30 17:51:33 by mparasku         ###   ########.fr       */
+/*   Created: 2023/01/31 14:03:31 by mparasku          #+#    #+#             */
+/*   Updated: 2023/02/02 15:42:48 by mparasku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char	*ft_strchr(const char *s, int c)
+char	*ft_strchr(char *s, int c)
 {
-	while ((char)c != *s)
+	size_t	i;
+
+	if (!s)
+		return (NULL);
+	if (c == 0)
 	{
-		if (!*s)
-			return (0);
-		s++;
+		i = ft_strlen((char *)s);
+		return (&s[i]);
 	}
-	return ((char *)s);
+	i = 0;
+	while (s[i])
+	{
+		if (s[i] == (char) c)
+			return (&s[i]);
+		i++;
+	}
+	return (NULL);
 }
 
-void	ft_putchar(char c)
-{
-	write (1, &c, 1);
-}
-
-
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(char *s1, char *s2)
 {
 	char	*p;
-	size_t	size;
+	int		size;
 
-	size = (ft_strlen(s1) + ft_strlen(s2) + 1);
+	if (!s1)
+	{
+		s1 = (char *)malloc(1 * sizeof(char));
+		s1[0] = '\0';
+	}
 	if (!s1 || !s2)
 		return (0);
-	p = malloc(size * sizeof(char));
+	size = 1 + ft_strlen(s1) + ft_strlen(s2);
+	p = (char *)malloc(size * sizeof(char));
 	if (!p)
 		return (0);
 	ft_strlcpy(p, s1, size);
 	ft_strlcat(p, s2, size);
+	free (s1);
 	return (p);
 }
 
-
-size_t	ft_strlcpy(char *dst, const char *src, size_t size)
-{
-	size_t	i;
-
-	i = 0;
-	if (size > 0)
-	{
-		while (i < (size - 1) && src[i] != 0)
-		{
-			dst[i] = src[i];
-			i++;
-		}
-		dst[i] = 0;
-	}
-	while (src[i])
-	{
-		i++;
-	}
-	return (i);
-}
-
-size_t	ft_strlen(const char *s)
-{
-	size_t	i;
-
-	i = 0;
-	while (s[i] != '\0')
-		i++;
-	return (i);
-}
-
-size_t	ft_strlcat(char *dst, const char *src, size_t size)
+size_t	ft_strlcat(char *dst, char *src, size_t size)
 {
 	size_t	i;
 	size_t	j;
@@ -100,39 +78,33 @@ size_t	ft_strlcat(char *dst, const char *src, size_t size)
 	return (dst_len + src_len);
 }
 
-char	*ft_strnew(size_t size)
+size_t	ft_strlcpy(char *dst, char *src, size_t size)
 {
-	char	*str;
-
-	if (!(str = (char *)malloc(sizeof(char) * size + 1)))
-		return (NULL);
-	str[size] = '\0';
-	while (size--)
-		str[size] = '\0';
-	return (str);
-}
-
-char	*ft_strdup(const char *s)
-{
-	char	*p;
-
-	p = malloc((ft_strlen(s) + 1) * sizeof(char));
-	if (p == 0)
-		return (0);
-	ft_strlcpy(p, s, (ft_strlen(s) + 1));
-	return (p);
-}
-
-char	*ft_strcpy(char *dest, char *src)
-{
-	int	i;
+	size_t	i;
 
 	i = 0;
-	while (src[i] != '\0')
+	if (size > 0)
 	{
-		dest[i] = src[i];
+		while (i < (size - 1) && src[i] != 0)
+		{
+			dst[i] = src[i];
+			i++;
+		}
+		dst[i] = 0;
+	}
+	while (src[i])
+	{
 		i++;
 	}
-	dest[i] = '\0';
-	return (dest);
+	return (i);
+}
+
+size_t	ft_strlen(char *s)
+{
+	size_t	i;
+
+	i = 0;
+	while (s[i] != '\0')
+		i++;
+	return (i);
 }
