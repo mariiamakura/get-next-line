@@ -1,0 +1,8 @@
+# ninja log v5
+2	36	1675427144923125973	CMakeFiles/git_hub_line.dir/get_next_line_utils.c.o	55bc65ae3cafbe3e
+1	37	1675427144923125973	CMakeFiles/git_hub_line.dir/get_next_line.c.o	4f12d82b6757fc50
+37	54	1675427144939125627	git_hub_line	dce01c90066585f0
+1	29	1675428310629907838	CMakeFiles/git_hub_line.dir/get_next_line.c.o	4f12d82b6757fc50
+29	51	1675428310653907319	git_hub_line	dce01c90066585f0
+1	30	1675428498453841942	CMakeFiles/git_hub_line.dir/get_next_line.c.o	4f12d82b6757fc50
+30	51	1675428498477841422	git_hub_line	dce01c90066585f0

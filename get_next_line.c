@@ -6,7 +6,7 @@
 /*   By: mparasku <mparasku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 14:03:28 by mparasku          #+#    #+#             */
-/*   Updated: 2023/02/02 17:21:12 by mparasku         ###   ########.fr       */
+/*   Updated: 2023/02/03 14:07:06 by mparasku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ char	*get_next_line(int fd)
 		return (0);
 	temp = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (!temp)
-		return (0);
+		free (temp);
 	while (!(ft_strchr(buf_start, '\n')) && fd_read != 0)
 	{
 		fd_read = read(fd, temp, BUFFER_SIZE);
@@ -105,16 +105,25 @@ char	*get_next_line(int fd)
 	int	fd;
 	char *str;
 	
-	fd = open("test.txt", O_RDWR);
+	fd = open("read_error.txt", O_RDWR);
+	
 	str = get_next_line(fd);
 	printf("%s", str);
+	free (str);
 
+	str = get_next_line(fd);
+	printf("%s", str);
+	free (str);
+	
+	str = get_next_line(fd);
+	printf("%s", str);
+	free (str);
+	
+	str = get_next_line(fd);
+	printf("%s", str);
 	free (str);
 	close (fd);
-	printf("%s", get_next_line(fd));
-	printf("%s", get_next_line(fd));
-	printf("%s", get_next_line(fd));
-}
- */
+} */
+
 /* to see leaks
 valgrind -s --leak-check=full --show-leak-kinds=all --track-origins=yes ./a.out */ 
