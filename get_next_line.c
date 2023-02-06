@@ -6,7 +6,7 @@
 /*   By: mparasku <mparasku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 14:03:28 by mparasku          #+#    #+#             */
-/*   Updated: 2023/02/03 14:07:06 by mparasku         ###   ########.fr       */
+/*   Updated: 2023/02/06 16:42:06 by mparasku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	*remove_line(char *buf_start)
 		return (0);
 	while (buf_start[i] && buf_start[i] != '\n')
 		i++;
-	if (buf_start[i] == '\0')
+	if (!buf_start[i])
 		return (ft_free(buf_start));
 	if (buf_start[i] == '\n')
 		i++;
@@ -53,7 +53,7 @@ char	*read_line(char *buf_start)
 	char	*line;
 
 	i = 0;
-	if (!buf_start || !buf_start[0])
+	if (!buf_start[i])
 		return (0);
 	while (buf_start[i] && buf_start[i] != '\n')
 		i++;
@@ -74,27 +74,41 @@ char	*read_line(char *buf_start)
 	return (line);
 }
 
+char	*read_buf(int fd, char *buf_start)
+{
+	char	*buff;
+	int		fd_read;
+
+	buff = malloc((BUFFER_SIZE + 1) * sizeof(char));
+	if (!buff)
+		return (NULL);
+	fd_read = 1;
+	while (!ft_strchr(buf_start, '\n') && fd_read != 0)
+	{
+		fd_read = read(fd, buff, BUFFER_SIZE);
+		if (fd_read < 0)
+		{
+			free (buf_start);
+			free(buff);
+			return (NULL);
+		}
+		buff[fd_read] = '\0';
+		buf_start = ft_strjoin(buf_start, buff);
+	}
+	free(buff);
+	return (buf_start);
+}
+
 char	*get_next_line(int fd)
 {
 	char		*temp;
-	int			fd_read;
 	static char	*buf_start;
 
-	fd_read = 1;
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (0);
-	temp = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
-	if (!temp)
-		free (temp);
-	while (!(ft_strchr(buf_start, '\n')) && fd_read != 0)
-	{
-		fd_read = read(fd, temp, BUFFER_SIZE);
-		if (fd_read < 0)
-			return (ft_free(temp));
-		temp[fd_read] = '\0';
-		buf_start = ft_strjoin(buf_start, temp);
-	}
-	free(temp);
+	buf_start = read_buf(fd, buf_start);
+	if (!buf_start)
+		return (NULL);
 	temp = read_line(buf_start);
 	buf_start = remove_line(buf_start);
 	return (temp);
@@ -105,7 +119,7 @@ char	*get_next_line(int fd)
 	int	fd;
 	char *str;
 	
-	fd = open("read_error.txt", O_RDWR);
+	fd = open("empty.txt", O_RDWR);
 	
 	str = get_next_line(fd);
 	printf("%s", str);

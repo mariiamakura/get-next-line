@@ -6,7 +6,7 @@
 /*   By: mparasku <mparasku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/31 14:03:31 by mparasku          #+#    #+#             */
-/*   Updated: 2023/02/02 15:42:48 by mparasku         ###   ########.fr       */
+/*   Updated: 2023/02/06 16:04:37 by mparasku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,19 +36,25 @@ char	*ft_strchr(char *s, int c)
 char	*ft_strjoin(char *s1, char *s2)
 {
 	char	*p;
-	int		size;
+	size_t	size;
 
 	if (!s1)
 	{
 		s1 = (char *)malloc(1 * sizeof(char));
 		s1[0] = '\0';
 	}
-	if (!s1 || !s2)
-		return (0);
+	if (!s2)
+	{
+		free(s1);
+		return (NULL);
+	}
 	size = 1 + ft_strlen(s1) + ft_strlen(s2);
 	p = (char *)malloc(size * sizeof(char));
 	if (!p)
-		return (0);
+	{
+		free(s1);
+		return (NULL);
+	}
 	ft_strlcpy(p, s1, size);
 	ft_strlcat(p, s2, size);
 	free (s1);
@@ -67,7 +73,7 @@ size_t	ft_strlcat(char *dst, char *src, size_t size)
 	j = dst_len;
 	i = 0;
 	if (size <= dst_len)
-		return (size + src_len);
+		return (src_len + dst_len);
 	while (src[i] != '\0' && j + 1 < size)
 	{
 		dst[j] = src[i];
@@ -83,20 +89,15 @@ size_t	ft_strlcpy(char *dst, char *src, size_t size)
 	size_t	i;
 
 	i = 0;
-	if (size > 0)
+	if (size == 0)
+		return (ft_strlen(src));
+	while (src[i] != '\0' && i < (size - 1))
 	{
-		while (i < (size - 1) && src[i] != 0)
-		{
-			dst[i] = src[i];
-			i++;
-		}
-		dst[i] = 0;
-	}
-	while (src[i])
-	{
+		dst[i] = src[i];
 		i++;
 	}
-	return (i);
+	dst[i] = '\0';
+	return (ft_strlen(src));
 }
 
 size_t	ft_strlen(char *s)
