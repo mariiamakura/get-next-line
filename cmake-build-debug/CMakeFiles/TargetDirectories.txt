@@ -1,3 +1,0 @@
-/nfs/homes/mparasku/tasks/my_github/git_hub_line/cmake-build-debug/CMakeFiles/git_hub_line.dir
-/nfs/homes/mparasku/tasks/my_github/git_hub_line/cmake-build-debug/CMakeFiles/edit_cache.dir
-/nfs/homes/mparasku/tasks/my_github/git_hub_line/cmake-build-debug/CMakeFiles/rebuild_cache.dir

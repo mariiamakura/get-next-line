@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mparasku <mparasku@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/31 14:03:28 by mparasku          #+#    #+#             */
-/*   Updated: 2023/02/06 16:42:06 by mparasku         ###   ########.fr       */
+/*   Created: 2023/02/07 16:16:06 by mparasku          #+#    #+#             */
+/*   Updated: 2023/02/07 16:37:01 by mparasku         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*ft_free(char *str)
 {
@@ -102,42 +102,14 @@ char	*read_buf(int fd, char *buf_start)
 char	*get_next_line(int fd)
 {
 	char		*temp;
-	static char	*buf_start;
+	static char	*buf_start[4096];
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (0);
-	buf_start = read_buf(fd, buf_start);
-	if (!buf_start)
+	buf_start[fd] = read_buf(fd, buf_start[fd]);
+	if (!buf_start[fd])
 		return (NULL);
-	temp = read_line(buf_start);
-	buf_start = remove_line(buf_start);
+	temp = read_line(buf_start[fd]);
+	buf_start[fd] = remove_line(buf_start[fd]);
 	return (temp);
 }
-
-/* int main()
-{
-	int	fd;
-	char *str;
-	
-	fd = open("empty.txt", O_RDWR);
-	
-	str = get_next_line(fd);
-	printf("%s", str);
-	free (str);
-
-	str = get_next_line(fd);
-	printf("%s", str);
-	free (str);
-	
-	str = get_next_line(fd);
-	printf("%s", str);
-	free (str);
-	
-	str = get_next_line(fd);
-	printf("%s", str);
-	free (str);
-	close (fd);
-} */
-
-/* to see leaks
-valgrind -s --leak-check=full --show-leak-kinds=all --track-origins=yes ./a.out */ 
